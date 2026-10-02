@@ -120,6 +120,29 @@ footer{
   font-size:13px;
   padding:28px 0 36px;
 }
+.lesson-status{
+  display:inline-block;
+  margin-top:8px;
+  padding:5px 9px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+}
+.lesson-status.done{
+  background:#eaf7ef;
+  color:#2b7a4b;
+  border:1px solid #c7e5d2;
+}
+.lesson-status.todo{
+  background:#f3f5f7;
+  color:#6b7d8f;
+  border:1px solid #dfe7ef;
+}
+.lesson-status.unknown{
+  background:#fff8e6;
+  color:#8a6500;
+  border:1px solid #f0dfaa;
+}
 @media(max-width:700px){
   h1{font-size:27px}
   .grid{grid-template-columns:1fr}
@@ -158,19 +181,18 @@ footer{
   </footer>
 </div>
 
+<script src="./config.js"></script>
 <script>
 const GITHUB_OWNER = "justin-le2020";
 const GITHUB_REPO = "flyers-learning";
 const GITHUB_BRANCH = "main";
 const LESSONS_FOLDER = "lessons";
+const SUBMISSION_ENDPOINT =
+  (window.FLYERS_CONFIG && window.FLYERS_CONFIG.submissionEndpoint)
+    ? window.FLYERS_CONFIG.submissionEndpoint
+    : "";
 
-/*
-Tên file chuẩn:
-w1l3_pronouns-possessives_2026-10-02.html
-w1l3_pronouns-possessives_2026-10-02_v2.html
-
-Parser cũng chấp nhận dấu "-" thay cho "_" ở một số vị trí.
-*/
+let lessonStatusMap = {};
 
 function parseLessonFile(name){
   const rx = /^w(\d+)l(\d+)[_-](.+?)[_-](\d{4}-\d{2}-\d{2})(?:[_-]v(\d+))?\.html$/i;
@@ -187,18 +209,22 @@ function parseLessonFile(name){
     .replace(/[_-]+/g, " ")
     .replace(/\b\w/g, c => c.toUpperCase());
 
-  return {name, week, lesson, rawTopic, topic, date, version};
+  return {
+    name,
+    week,
+    lesson,
+    lessonId:`W${week}L${lesson}`,
+    rawTopic,
+    topic,
+    date,
+    version
+  };
 }
 
 function compareLessons(a,b){
-  // 1) Newest creation date first
   if(a.date !== b.date) return b.date.localeCompare(a.date);
-
-  // 2) On the same date, the later learning sequence comes first
   if(a.week !== b.week) return b.week - a.week;
   if(a.lesson !== b.lesson) return b.lesson - a.lesson;
-
-  // 3) Only when it is the same lesson, prefer the higher version
   return b.version - a.version;
 }
 
@@ -208,6 +234,27 @@ function lessonUrl(name){
 
 function lessonLabel(item){
   return `Week ${item.week} · Lesson ${item.lesson}`;
+}
+
+function formatLastDone(iso){
+  if(!iso) return "";
+  const d = new Date(iso);
+  if(Number.isNaN(d.getTime())) return "";
+  return new Intl.DateTimeFormat("vi-VN",{
+    day:"2-digit",month:"2-digit",year:"numeric"
+  }).format(d);
+}
+
+function statusHtml(item){
+  const s = lessonStatusMap[item.lessonId];
+  if(!SUBMISSION_ENDPOINT){
+    return `<span class="lesson-status unknown">Chưa kết nối trạng thái</span>`;
+  }
+  if(s && s.done){
+    const last = formatLastDone(s.lastSubmittedAt);
+    return `<span class="lesson-status done">✓ Đã làm${last ? ` · ${last}` : ""}</span>`;
+  }
+  return `<span class="lesson-status todo">Chưa làm</span>`;
 }
 
 function renderLessons(items){
@@ -227,10 +274,14 @@ function renderLessons(items){
   status.style.display = "none";
 
   const latest = items[0];
+  const latestStatus = statusHtml(latest);
+
   document.getElementById("latestTitle").textContent =
     `${lessonLabel(latest)} · ${latest.topic}`;
-  document.getElementById("latestMeta").textContent =
-    `Tạo ngày ${latest.date}${latest.version > 1 ? ` · Version ${latest.version}` : ""}`;
+
+  document.getElementById("latestMeta").innerHTML =
+    `Tạo ngày ${latest.date}${latest.version > 1 ? ` · Version ${latest.version}` : ""}<br>${latestStatus}`;
+
   document.getElementById("latestLink").href = lessonUrl(latest.name);
   latestBox.style.display = "flex";
 
@@ -239,14 +290,60 @@ function renderLessons(items){
     card.className = "card";
 
     const latestTag = index === 0 ? '<div class="badge">MỚI NHẤT</div>' : '';
+
     card.innerHTML = `
       ${latestTag}
       <div class="meta">${lessonLabel(item)} · ${item.date}${item.version > 1 ? ` · v${item.version}` : ""}</div>
       <h3>${item.topic}</h3>
+      <div>${statusHtml(item)}</div>
       <p class="muted">Mở bài học và làm trực tiếp trên trình duyệt.</p>
-      <a class="btn btn-primary" href="${lessonUrl(item.name)}">Mở bài</a>
+      <a class="btn btn-primary" href="${lessonUrl(item.name)}">${lessonStatusMap[item.lessonId]?.done ? "Mở lại bài" : "Mở bài"}</a>
     `;
     grid.appendChild(card);
+  });
+}
+
+function loadCompletionStatus(){
+  return new Promise(resolve=>{
+    if(!SUBMISSION_ENDPOINT){
+      lessonStatusMap = {};
+      resolve();
+      return;
+    }
+
+    const callbackName = "__flyersStatusCallback_" + Date.now();
+
+    const cleanup = ()=>{
+      try{ delete window[callbackName]; }catch(_){}
+      const el = document.getElementById(callbackName);
+      if(el) el.remove();
+    };
+
+    const timer = setTimeout(()=>{
+      cleanup();
+      lessonStatusMap = {};
+      resolve();
+    },8000);
+
+    window[callbackName] = data=>{
+      clearTimeout(timer);
+      lessonStatusMap = (data && data.lessons) ? data.lessons : {};
+      cleanup();
+      resolve();
+    };
+
+    const script = document.createElement("script");
+    script.id = callbackName;
+    script.src =
+      `${SUBMISSION_ENDPOINT}?action=status&callback=${encodeURIComponent(callbackName)}&_=${Date.now()}`;
+    script.onerror = ()=>{
+      clearTimeout(timer);
+      cleanup();
+      lessonStatusMap = {};
+      resolve();
+    };
+
+    document.head.appendChild(script);
   });
 }
 
@@ -261,13 +358,17 @@ async function loadLessons(){
   latestBox.style.display = "none";
   grid.innerHTML = "";
 
-  const api = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${LESSONS_FOLDER}?ref=${GITHUB_BRANCH}`;
+  const api =
+    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${LESSONS_FOLDER}?ref=${GITHUB_BRANCH}`;
 
   try{
-    const res = await fetch(api, {
-      headers: {"Accept":"application/vnd.github+json"},
-      cache:"no-store"
-    });
+    const [res] = await Promise.all([
+      fetch(api,{
+        headers:{"Accept":"application/vnd.github+json"},
+        cache:"no-store"
+      }),
+      loadCompletionStatus()
+    ]);
 
     if(!res.ok){
       throw new Error(`GitHub API returned ${res.status}`);
@@ -293,6 +394,7 @@ async function loadLessons(){
 
 document.getElementById("refreshBtn").addEventListener("click", loadLessons);
 loadLessons();
+
 </script>
 </body>
 </html>
