@@ -191,13 +191,15 @@ function parseLessonFile(name){
 }
 
 function compareLessons(a,b){
-  // Newest creation date first
+  // 1) Newest creation date first
   if(a.date !== b.date) return b.date.localeCompare(a.date);
-  // Higher version first on same date
-  if(a.version !== b.version) return b.version - a.version;
-  // Then higher week/lesson first
+
+  // 2) On the same date, the later learning sequence comes first
   if(a.week !== b.week) return b.week - a.week;
-  return b.lesson - a.lesson;
+  if(a.lesson !== b.lesson) return b.lesson - a.lesson;
+
+  // 3) Only when it is the same lesson, prefer the higher version
+  return b.version - a.version;
 }
 
 function lessonUrl(name){
