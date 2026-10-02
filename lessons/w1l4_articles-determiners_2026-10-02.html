@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Flyers Remediation - Week 1 Lesson 4</title>
+<style>
+:root{
+  --bg:#f6f8fb; --card:#ffffff; --ink:#18324a; --muted:#617487;
+  --line:#dfe7ef; --accent:#2f6f9f; --soft:#eaf3fa; --ok:#2b7a4b;
+  --warn:#b07a00; --shadow:0 8px 24px rgba(24,50,74,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+.wrap{max-width:920px;margin:auto;padding:18px}
+.hero{background:linear-gradient(135deg,#eef6fb,#fff);border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:var(--shadow);margin:14px 0 18px}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:30px;line-height:1.15;margin:8px 0 8px}
+h2{font-size:22px;margin:0 0 12px}
+h3{font-size:18px;margin:0 0 10px}
+p{margin:8px 0}
+.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.pill{background:var(--soft);border:1px solid #d5e7f5;border-radius:14px;padding:12px;font-weight:700;text-align:center}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow);margin:14px 0}
+.rule{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.rule > div{border:1px solid var(--line);border-radius:14px;padding:14px}
+.rule strong{display:block;font-size:17px}
+.example{background:#f9fbfd;border-left:4px solid var(--accent);padding:12px 14px;border-radius:8px;margin:10px 0}
+.q{padding:18px 0;border-top:1px solid var(--line)}
+.q:first-child{border-top:0}
+.q-title{font-weight:700;margin-bottom:10px}
+.options{display:grid;gap:8px}
+label.opt{display:flex;align-items:flex-start;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;background:#fff}
+label.opt:hover{background:#f7fbfe}
+input[type=radio]{margin-top:4px;transform:scale(1.15)}
+input[type=text]{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 12px;font-size:16px}
+.section-note{font-size:14px;color:var(--muted);margin-bottom:6px}
+.tip{background:#fff8e6;border:1px solid #f0dfaa;border-radius:12px;padding:12px 14px;margin:12px 0}
+button{border:0;border-radius:12px;padding:12px 16px;font-size:16px;font-weight:700;cursor:pointer}
+button:disabled{opacity:.65;cursor:not-allowed}
+.primary{background:var(--accent);color:white}
+.secondary{background:#e9eef3;color:var(--ink)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.progress{height:10px;background:#e7edf3;border-radius:999px;overflow:hidden;margin-top:10px}
+.progress > div{height:100%;background:var(--accent);width:0%;transition:width .2s}
+.status{padding:12px 14px;border-radius:12px;margin-top:12px;display:none}
+.status.show{display:block}
+.status.ok{background:#eaf7ef;border:1px solid #bfe1cb;color:#1e5c38}
+.status.warn{background:#fff6df;border:1px solid #f2d89b;color:#795600}
+small{font-size:13px}
+details{margin-top:14px}
+summary{cursor:pointer;font-weight:700}
+.parentbox{margin-top:12px;padding:14px;background:#f7f9fb;border:1px dashed #bdcad6;border-radius:12px}
+textarea{width:100%;min-height:220px;border:1px solid var(--line);border-radius:10px;padding:10px;font-family:Consolas,monospace;font-size:13px}
+.hidden{display:none!important}
+footer{color:var(--muted);font-size:13px;padding:22px 4px 30px;text-align:center}
+@media(max-width:700px){
+  h1{font-size:25px}.grid,.rule{grid-template-columns:1fr}.wrap{padding:12px}.card,.hero{padding:18px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="eyebrow">Cambridge A2 Flyers · Remediation Programme</div>
+  <h1>Week 1 – Lesson 4: Articles & Determiners in Context</h1>
+  <p class="muted">a · an · the · his/her/their · there/their · many/much</p>
+  <div class="grid">
+    <div class="pill">CHOOSE THE RIGHT NOUN PHRASE</div>
+    <div class="pill">FOLLOW THE MEANING</div>
+    <div class="pill">CHECK THE WHOLE SENTENCE</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>1. Learn</h2>
+
+  <h3>A / AN = one thing, not specific yet</h3>
+  <div class="example">I need <strong>a towel</strong>.<br>We saw <strong>an elephant</strong>.</div>
+  <p><strong>a</strong> thường đứng trước âm đầu phụ âm; <strong>an</strong> thường đứng trước âm đầu nguyên âm.</p>
+
+  <h3 style="margin-top:18px">THE = a specific thing</h3>
+  <div class="example">We saw a dog. <strong>The dog</strong> followed us home.</div>
+  <p>Khi đồ vật/người đã được nhắc đến hoặc đã xác định rõ, ta thường dùng <strong>the</strong>.</p>
+
+  <div class="example">Mia is <strong>the tallest</strong> girl in her class.</div>
+  <p>Với so sánh nhất như <strong>the tallest / the biggest / the youngest</strong>, thường dùng <strong>the</strong>.</p>
+
+  <h3 style="margin-top:18px">Possessives = who owns it?</h3>
+  <div class="rule">
+    <div><strong>his</strong><span>của cậu ấy / anh ấy</span><br><small>his bike</small></div>
+    <div><strong>her</strong><span>của cô ấy</span><br><small>her bag</small></div>
+    <div><strong>their</strong><span>của họ</span><br><small>their books</small></div>
+  </div>
+
+  <div class="tip">
+    <strong>Important:</strong> Đừng chọn từ vì nó đứng gần danh từ nhất. Hãy hỏi: <em>Ai sở hữu vật này?</em>
+  </div>
+
+  <h3 style="margin-top:18px">THERE vs THEIR</h3>
+  <div class="example"><strong>There</strong> are three books on the desk.<br>The children put <strong>their</strong> books on the desk.</div>
+
+  <h3 style="margin-top:18px">MANY vs MUCH</h3>
+  <div class="example"><strong>many</strong> books · <strong>many</strong> apples<br><strong>much</strong> water · <strong>much</strong> noise</div>
+  <p><strong>many</strong> thường đi với danh từ đếm được số nhiều; <strong>much</strong> thường đi với danh từ không đếm được.</p>
+</section>
+
+<section class="card">
+  <h2>2. Quick strategy</h2>
+  <p>Before choosing an answer, ask:</p>
+  <div class="rule">
+    <div><strong>1. What noun?</strong><span>Danh từ nào đang được nói tới?</span></div>
+    <div><strong>2. Specific or new?</strong><span>Mới nhắc lần đầu hay đã xác định?</span></div>
+    <div><strong>3. Who owns it?</strong><span>Nếu là sở hữu, vật đó thuộc về ai?</span></div>
+  </div>
+  <div class="tip"><strong>Remember:</strong> Don’t choose the nearest word. Follow the meaning.</div>
+</section>
+
+<form id="quizForm">
+
+<section class="card">
+  <h2>3. Practice Quiz</h2>
+  <div class="section-note">Choose one answer for each question.</div>
+  <div id="practice"></div>
+</section>
+
+<section class="card">
+  <h2>4. Reading Checkpoint</h2>
+  <div class="section-note">Read the story carefully. Use both grammar and meaning.</div>
+
+  <div class="example">
+    <strong>A Visit to the Science Museum</strong><br><br>
+    On Saturday, Maya and her brother Ben visited a new science museum. At the entrance, they saw an enormous model of a whale. The model hung above the main hall.<br><br>
+    Maya carried a small notebook in her bag. Ben had two pencils in his pocket. There were many visitors in the museum, but there wasn't much noise.<br><br>
+    After an hour, Ben could not find his pencils. Maya looked under a bench and found them. She gave them back to him.<br><br>
+    Before they left, the children bought a postcard. The postcard showed the whale model.
+  </div>
+
+  <div id="checkpoint"></div>
+</section>
+
+<section class="card">
+  <h2>5. Writing Check</h2>
+  <div class="section-note">Write the full sentence. Check articles, possessives and pronouns.</div>
+  <div id="writing"></div>
+</section>
+
+<section class="card">
+  <h2>6. Submit</h2>
+  <label for="studentCode"><strong>Student code</strong> <span class="muted">(do not use a full real name)</span></label>
+  <input id="studentCode" name="studentCode" type="text" maxlength="30" placeholder="Example: FLYERS-01" />
+  <div class="progress"><div id="bar"></div></div>
+  <p id="progressText" class="muted">0 answered</p>
+
+  <div class="actions">
+    <button class="primary" type="submit" id="submitBtn">Submit lesson</button>
+    <button class="secondary" type="button" id="clearBtn">Clear answers</button>
+  </div>
+
+  <div id="status" class="status"></div>
+
+  <details id="parentDetails" class="hidden">
+    <summary>Parent backup: copy submission report</summary>
+    <div class="parentbox">
+      <p class="muted">Use this only if automatic submission fails. Copy the report and paste it into the parent’s ChatGPT conversation.</p>
+      <textarea id="report" readonly></textarea>
+      <div class="actions"><button class="secondary" type="button" id="copyBtn">Copy report</button></div>
+    </div>
+  </details>
+</section>
+
+</form>
+
+<footer>
+  Flyers Remediation · Week 1 Lesson 4 · Articles & Determiners in Context
+</footer>
+
+</div>
+
+<script src="../config.js"></script>
+
+<script>
+const SUBMISSION_ENDPOINT =
+  (window.FLYERS_CONFIG && window.FLYERS_CONFIG.submissionEndpoint)
+    ? window.FLYERS_CONFIG.submissionEndpoint
+    : "";
+
+const practiceQuestions = [
+  {id:"P1", skill:"articles", q:"After a shower, I use _____ towel to dry myself.", options:["a","an","the","their"], key:"a"},
+  {id:"P2", skill:"articles", q:"We saw _____ elephant at the zoo.", options:["a","an","the","his"], key:"an"},
+  {id:"P3", skill:"articles", q:"We went to a park yesterday. _____ park had a big lake.", options:["A","An","The","Their"], key:"The"},
+  {id:"P4", skill:"articles", q:"Mia is _____ tallest girl in her class.", options:["a","an","the","her"], key:"the"},
+  {id:"P5", skill:"owner", q:"Ben has a dog. _____ dog is called Max.", options:["He","Him","His","Their"], key:"His"},
+  {id:"P6", skill:"owner", q:"Anna and Lily have new bicycles. _____ bicycles are blue.", options:["They","Them","Their","Her"], key:"Their"},
+  {id:"P7", skill:"there_their", q:"_____ are three apples on the table.", options:["There","Their","They","Them"], key:"There"},
+  {id:"P8", skill:"there_their", q:"The children put _____ bags next to the door.", options:["there","their","they","them"], key:"their"},
+  {id:"P9", skill:"quantifiers", q:"How _____ water do you drink every day?", options:["many","much","more many","their"], key:"much"},
+  {id:"P10", skill:"quantifiers", q:"How _____ books are in your school bag?", options:["many","much","the","there"], key:"many"},
+  {id:"P11", skill:"owner", q:"This bag belongs to Lucy. It is _____ bag.", options:["she","her","hers","their"], key:"her"},
+  {id:"P12", skill:"articles", q:"We saw a small dog near the gate. _____ dog followed us home.", options:["A","An","The","Their"], key:"The"}
+];
+
+const checkpointQuestions = [
+  {id:"C1", skill:"articles", q:"Maya and Ben visited _____ new science museum.", options:["a","an","the","their"], key:"a"},
+  {id:"C2", skill:"articles", q:"At the entrance, they saw _____ enormous model of a whale.", options:["a","an","the","their"], key:"an"},
+  {id:"C3", skill:"articles", q:"After the model is introduced, which sentence is correct?", options:["A model hung above the main hall.","An model hung above the main hall.","The model hung above the main hall.","Their model hung above the main hall."], key:"The model hung above the main hall."},
+  {id:"C4", skill:"quantifiers", q:"There were _____ visitors in the museum.", options:["many","much","the","their"], key:"many"},
+  {id:"C5", skill:"quantifiers", q:"There wasn't _____ noise in the museum.", options:["many","much","their","an"], key:"much"},
+  {id:"C6", skill:"reference", q:"In 'Maya looked under a bench and found them', what does 'them' refer to?", options:["the visitors","the pencils","the benches","the postcards"], key:"the pencils"}
+];
+
+const writingQuestions = [
+  {id:"W1", skill:"writing", q:"Rewrite without repeating Ben: 'Ben could not find Ben’s pencils.'", prompt:"Type the full sentence."},
+  {id:"W2", skill:"writing", q:"Correct the sentence: 'Their are many visitors in the museum.'", prompt:"Type the corrected sentence."}
+];
+
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[s]));
+}
+
+function renderMC(container, item, prefix){
+  const div = document.createElement("div");
+  div.className = "q";
+  div.innerHTML = `<div class="q-title">${item.id}. ${item.q}</div><div class="options"></div>`;
+  const opts = div.querySelector(".options");
+
+  item.options.forEach((o, i)=>{
+    const id = `${prefix}_${item.id}_${i}`;
+    const lab = document.createElement("label");
+    lab.className = "opt";
+    lab.setAttribute("for", id);
+    lab.innerHTML = `<input id="${id}" type="radio" name="${item.id}" value="${escapeHtml(o)}"> <span>${escapeHtml(o)}</span>`;
+    opts.appendChild(lab);
+  });
+  container.appendChild(div);
+}
+
+function renderText(container, item){
+  const div = document.createElement("div");
+  div.className = "q";
+  div.innerHTML = `
+    <div class="q-title">${item.id}. ${item.q}</div>
+    <input type="text" name="${item.id}" placeholder="${escapeHtml(item.prompt || "Type your answer here")}">
+  `;
+  container.appendChild(div);
+}
+
+const practiceEl = document.getElementById("practice");
+practiceQuestions.forEach(q => renderMC(practiceEl, q, "p"));
+
+const checkpointEl = document.getElementById("checkpoint");
+checkpointQuestions.forEach(q => renderMC(checkpointEl, q, "c"));
+
+const writingEl = document.getElementById("writing");
+writingQuestions.forEach(q => renderText(writingEl, q));
+
+const objectiveQuestions = [...practiceQuestions, ...checkpointQuestions];
+const allIds = [
+  ...objectiveQuestions.map(x=>x.id),
+  ...writingQuestions.map(x=>x.id)
+];
+
+const form = document.getElementById("quizForm");
+const bar = document.getElementById("bar");
+const progressText = document.getElementById("progressText");
+const statusEl = document.getElementById("status");
+const reportEl = document.getElementById("report");
+const parentDetails = document.getElementById("parentDetails");
+
+const PAGE_SUBMISSION_ID =
+  "W1L4-" +
+  new Date().toISOString().replace(/\D/g,"").slice(0,14) +
+  "-" +
+  Math.random().toString(36).slice(2,6).toUpperCase();
+
+function readAnswers(){
+  const data = {};
+  allIds.forEach(id=>{
+    const chosen = form.querySelector(`[name="${id}"]:checked`);
+    const text = form.querySelector(`input[type="text"][name="${id}"]`);
+    data[id] = chosen ? chosen.value : (text ? text.value.trim() : "");
+  });
+  return data;
+}
+
+function updateProgress(){
+  const ans = readAnswers();
+  const n = Object.values(ans).filter(v=>v!=="").length;
+  const pct = Math.round(n/allIds.length*100);
+  bar.style.width = pct+"%";
+  progressText.textContent = `${n} of ${allIds.length} answered`;
+}
+form.addEventListener("change", updateProgress);
+form.addEventListener("input", updateProgress);
+
+function objectiveScore(answers){
+  let correct = 0;
+  const detail = [];
+  const skill = {};
+
+  objectiveQuestions.forEach(q=>{
+    const ok = answers[q.id] === q.key;
+    if(ok) correct++;
+
+    detail.push({
+      id:q.id,
+      skill:q.skill,
+      answer:answers[q.id] || "",
+      correct:ok
+    });
+
+    if(!skill[q.skill]) skill[q.skill] = {correct:0,total:0};
+    skill[q.skill].total++;
+    if(ok) skill[q.skill].correct++;
+  });
+
+  return {
+    correct,
+    total:objectiveQuestions.length,
+    detail,
+    skill
+  };
+}
+
+function submissionPayload(){
+  const answers = readAnswers();
+  const score = objectiveScore(answers);
+  const code = document.getElementById("studentCode").value.trim() || "UNSPECIFIED";
+
+  return {
+    programme:"Flyers Remediation",
+    baseline:"Mock 6",
+    lessonId:"W1L4",
+    lesson:"Week 1 Lesson 4",
+    topic:"Articles & Determiners in Context",
+    skillsTested:[
+      "articles",
+      "possessive determiners",
+      "there/their",
+      "many/much",
+      "reference tracking",
+      "writing accuracy"
+    ],
+    studentCode:code,
+    submissionId:PAGE_SUBMISSION_ID,
+    submittedAt:new Date().toISOString(),
+    answers,
+    objectiveScore:score,
+    shortAnswerIds:writingQuestions.map(q=>q.id),
+    note:"Do not reveal answer key to learner before parent/ChatGPT correction round."
+  };
+}
+
+function makeReport(payload){
+  const s = payload.objectiveScore;
+  const lines = [
+    "FLYERS REMEDIATION SUBMISSION",
+    "Lesson: Week 1 – Lesson 4",
+    "Topic: Articles & Determiners in Context",
+    `Student code: ${payload.studentCode}`,
+    `Submission ID: ${payload.submissionId}`,
+    `Submitted at: ${payload.submittedAt}`,
+    "",
+    "ANSWERS"
+  ];
+
+  allIds.forEach(id => lines.push(`${id}: ${payload.answers[id] || "[blank]"}`));
+
+  lines.push("", "OBJECTIVE SUMMARY (hidden from learner)");
+  lines.push(`Objective score: ${s.correct}/${s.total}`);
+
+  Object.entries(s.skill).forEach(([k,v])=>{
+    lines.push(`${k}: ${v.correct}/${v.total}`);
+  });
+
+  lines.push("", "ITEM STATUS (1=correct, 0=incorrect)");
+  s.detail.forEach(d=>{
+    lines.push(`${d.id}|${d.skill}|${d.answer}|${d.correct?1:0}`);
+  });
+
+  lines.push("", "SHORT ANSWERS FOR REVIEW");
+  writingQuestions.forEach(q=>{
+    lines.push(`${q.id}: ${payload.answers[q.id] || "[blank]"}`);
+  });
+
+  lines.push("", "REQUEST FOR CHATGPT");
+  lines.push(
+    "Evaluate this W1L4 submission against Mock 6 and W1L1-W1L3. " +
+    "Group errors by articles, possessive determiners, there/their, many/much, reference tracking and writing accuracy. " +
+    "Give hints for self-correction before revealing answers, identify retained skills from earlier lessons, and decide the next remediation focus."
+  );
+
+  return lines.join("\n");
+}
+
+form.addEventListener("submit", async (e)=>{
+  e.preventDefault();
+
+  const answers = readAnswers();
+  const missing = allIds.filter(id=>!answers[id]);
+
+  if(missing.length){
+    statusEl.className = "status show warn";
+    statusEl.textContent =
+      `Please answer all questions before submitting. Missing: ${missing.join(", ")}`;
+    return;
+  }
+
+  const submitBtn = document.getElementById("submitBtn");
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Submitting...";
+
+  const payload = submissionPayload();
+  const report = makeReport(payload);
+  reportEl.value = report;
+  localStorage.setItem("flyers_w1l4_last_submission", report);
+
+  if(SUBMISSION_ENDPOINT){
+    try{
+      await fetch(SUBMISSION_ENDPOINT,{
+        method:"POST",
+        mode:"no-cors",
+        headers:{"Content-Type":"text/plain;charset=UTF-8"},
+        body:JSON.stringify(payload)
+      });
+
+      statusEl.className = "status show ok";
+      statusEl.innerHTML =
+        `Lesson submitted. Submission ID: <strong>${escapeHtml(payload.submissionId)}</strong><br>` +
+        `<small>Please do not submit again. Your parent can review the result later.</small>`;
+
+      submitBtn.textContent = "Submitted";
+      parentDetails.classList.add("hidden");
+
+    }catch(err){
+      statusEl.className = "status show warn";
+      statusEl.textContent =
+        "Automatic submission could not be confirmed. Use the parent backup report below.";
+
+      parentDetails.classList.remove("hidden");
+      parentDetails.open = true;
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit lesson";
+    }
+
+  }else{
+    statusEl.className = "status show warn";
+    statusEl.textContent =
+      "This lesson is not connected to the parent result sheet yet. Use the parent backup report below.";
+
+    parentDetails.classList.remove("hidden");
+    parentDetails.open = true;
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Submit lesson";
+  }
+
+  window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"});
+});
+
+document.getElementById("copyBtn").addEventListener("click", async ()=>{
+  try{
+    await navigator.clipboard.writeText(reportEl.value);
+    document.getElementById("copyBtn").textContent = "Copied";
+    setTimeout(()=>document.getElementById("copyBtn").textContent="Copy report",1400);
+  }catch(e){
+    reportEl.select();
+    document.execCommand("copy");
+  }
+});
+
+document.getElementById("clearBtn").addEventListener("click", ()=>{
+  if(confirm("Clear all answers?")){
+    form.reset();
+    updateProgress();
+    statusEl.className = "status";
+    reportEl.value = "";
+    parentDetails.classList.add("hidden");
+
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Submit lesson";
+  }
+});
+
+updateProgress();
+</script>
+</body>
+</html>
