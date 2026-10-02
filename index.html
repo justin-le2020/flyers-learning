@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flyers Learning</title>
+<style>
+:root{
+  --bg:#f6f8fb;
+  --card:#fff;
+  --ink:#17324a;
+  --muted:#6b7d8f;
+  --line:#dfe7ef;
+  --accent:#2f6f9f;
+  --accent2:#eaf3fa;
+  --good:#2b7a4b;
+  --shadow:0 8px 24px rgba(24,50,74,.08);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+}
+.wrap{
+  max-width:960px;
+  margin:0 auto;
+  padding:18px;
+}
+.hero{
+  background:linear-gradient(135deg,#eef6fb,#ffffff);
+  border:1px solid var(--line);
+  border-radius:22px;
+  box-shadow:var(--shadow);
+  padding:28px;
+  margin:14px 0 18px;
+}
+.eyebrow{
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-size:12px;
+  font-weight:700;
+  color:var(--accent);
+}
+h1{margin:8px 0 8px;font-size:32px;line-height:1.12}
+p{line-height:1.55}
+.muted{color:var(--muted)}
+.latest{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  align-items:center;
+  justify-content:space-between;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  padding:20px;
+  margin:16px 0;
+}
+.latest-title{font-size:21px;font-weight:800;margin:0 0 4px}
+.badge{
+  display:inline-block;
+  background:#eaf7ef;
+  color:var(--good);
+  border:1px solid #c7e5d2;
+  padding:5px 9px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:8px;
+}
+.btn{
+  display:inline-block;
+  text-decoration:none;
+  border-radius:12px;
+  padding:12px 16px;
+  font-weight:800;
+  border:0;
+  cursor:pointer;
+}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-secondary{background:#e9eef3;color:var(--ink)}
+.toolbar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  margin:22px 0 10px;
+}
+.toolbar h2{margin:0;font-size:22px}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:18px;
+  box-shadow:var(--shadow);
+}
+.card h3{margin:4px 0 6px;font-size:19px}
+.meta{font-size:13px;color:var(--muted);margin-bottom:12px}
+.topic{font-weight:700}
+.empty,.error{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:18px;
+  color:var(--muted);
+}
+.error{border-color:#f0c5c5;color:#7a3f3f}
+footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+  padding:28px 0 36px;
+}
+@media(max-width:700px){
+  h1{font-size:27px}
+  .grid{grid-template-columns:1fr}
+  .wrap{padding:12px}
+  .hero{padding:20px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Cambridge A2 Flyers · Remediation Programme</div>
+    <h1>Flyers Learning</h1>
+    <p class="muted">Chọn bài mới nhất để học, hoặc mở lại các bài trước nếu cần ôn tập.</p>
+  </section>
+
+  <section id="latestBox" class="latest" style="display:none">
+    <div>
+      <div class="badge">BÀI MỚI NHẤT</div>
+      <div id="latestTitle" class="latest-title"></div>
+      <div id="latestMeta" class="muted"></div>
+    </div>
+    <a id="latestLink" class="btn btn-primary" href="#">Bắt đầu bài mới nhất</a>
+  </section>
+
+  <div class="toolbar">
+    <h2>Tất cả bài học</h2>
+    <button id="refreshBtn" class="btn btn-secondary" type="button">Làm mới danh sách</button>
+  </div>
+
+  <div id="status" class="empty">Đang tải danh sách bài học...</div>
+  <section id="lessonGrid" class="grid"></section>
+
+  <footer>
+    Flyers Remediation · Parent-managed learning portal
+  </footer>
+</div>
+
+<script>
+const GITHUB_OWNER = "justin-le2020";
+const GITHUB_REPO = "flyers-learning";
+const GITHUB_BRANCH = "main";
+const LESSONS_FOLDER = "lessons";
+
+/*
+Tên file chuẩn:
+w1l3_pronouns-possessives_2026-10-02.html
+w1l3_pronouns-possessives_2026-10-02_v2.html
+
+Parser cũng chấp nhận dấu "-" thay cho "_" ở một số vị trí.
+*/
+
+function parseLessonFile(name){
+  const rx = /^w(\d+)l(\d+)[_-](.+?)[_-](\d{4}-\d{2}-\d{2})(?:[_-]v(\d+))?\.html$/i;
+  const m = name.match(rx);
+  if(!m) return null;
+
+  const week = Number(m[1]);
+  const lesson = Number(m[2]);
+  const rawTopic = m[3];
+  const date = m[4];
+  const version = m[5] ? Number(m[5]) : 1;
+
+  const topic = rawTopic
+    .replace(/[_-]+/g, " ")
+    .replace(/\b\w/g, c => c.toUpperCase());
+
+  return {name, week, lesson, rawTopic, topic, date, version};
+}
+
+function compareLessons(a,b){
+  // Newest creation date first
+  if(a.date !== b.date) return b.date.localeCompare(a.date);
+  // Higher version first on same date
+  if(a.version !== b.version) return b.version - a.version;
+  // Then higher week/lesson first
+  if(a.week !== b.week) return b.week - a.week;
+  return b.lesson - a.lesson;
+}
+
+function lessonUrl(name){
+  return `./lessons/${encodeURIComponent(name)}`;
+}
+
+function lessonLabel(item){
+  return `Week ${item.week} · Lesson ${item.lesson}`;
+}
+
+function renderLessons(items){
+  const status = document.getElementById("status");
+  const grid = document.getElementById("lessonGrid");
+  const latestBox = document.getElementById("latestBox");
+
+  grid.innerHTML = "";
+
+  if(!items.length){
+    status.className = "empty";
+    status.textContent = "Chưa tìm thấy bài học nào theo đúng quy tắc đặt tên.";
+    latestBox.style.display = "none";
+    return;
+  }
+
+  status.style.display = "none";
+
+  const latest = items[0];
+  document.getElementById("latestTitle").textContent =
+    `${lessonLabel(latest)} · ${latest.topic}`;
+  document.getElementById("latestMeta").textContent =
+    `Tạo ngày ${latest.date}${latest.version > 1 ? ` · Version ${latest.version}` : ""}`;
+  document.getElementById("latestLink").href = lessonUrl(latest.name);
+  latestBox.style.display = "flex";
+
+  items.forEach((item, index)=>{
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const latestTag = index === 0 ? '<div class="badge">MỚI NHẤT</div>' : '';
+    card.innerHTML = `
+      ${latestTag}
+      <div class="meta">${lessonLabel(item)} · ${item.date}${item.version > 1 ? ` · v${item.version}` : ""}</div>
+      <h3>${item.topic}</h3>
+      <p class="muted">Mở bài học và làm trực tiếp trên trình duyệt.</p>
+      <a class="btn btn-primary" href="${lessonUrl(item.name)}">Mở bài</a>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+async function loadLessons(){
+  const status = document.getElementById("status");
+  const latestBox = document.getElementById("latestBox");
+  const grid = document.getElementById("lessonGrid");
+
+  status.style.display = "block";
+  status.className = "empty";
+  status.textContent = "Đang tải danh sách bài học...";
+  latestBox.style.display = "none";
+  grid.innerHTML = "";
+
+  const api = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${LESSONS_FOLDER}?ref=${GITHUB_BRANCH}`;
+
+  try{
+    const res = await fetch(api, {
+      headers: {"Accept":"application/vnd.github+json"},
+      cache:"no-store"
+    });
+
+    if(!res.ok){
+      throw new Error(`GitHub API returned ${res.status}`);
+    }
+
+    const files = await res.json();
+
+    const lessons = files
+      .filter(x => x.type === "file" && x.name.toLowerCase().endsWith(".html"))
+      .map(x => parseLessonFile(x.name))
+      .filter(Boolean)
+      .sort(compareLessons);
+
+    renderLessons(lessons);
+
+  }catch(err){
+    status.style.display = "block";
+    status.className = "error";
+    status.innerHTML =
+      "Không tải được danh sách bài học lúc này. Hãy thử lại sau hoặc báo cho phụ huynh.";
+  }
+}
+
+document.getElementById("refreshBtn").addEventListener("click", loadLessons);
+loadLessons();
+</script>
+</body>
+</html>
